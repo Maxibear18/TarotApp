@@ -71,7 +71,7 @@ function App() {
         </div>
       )}
 
-      <div className="version-label">V 1.0</div>
+      <div className="version-label">V 1.1</div>
     </div>
   );
 }
