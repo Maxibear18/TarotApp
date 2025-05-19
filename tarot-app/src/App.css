@@ -148,3 +148,14 @@ button {
   width: 220px;
   text-align: center;
 }
+
+.version-label {
+  position: fixed;
+  bottom: 10px;
+  right: 15px;
+  color: white;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  z-index: 50;
+}
+
