@@ -17,19 +17,48 @@ button {
   cursor: pointer;
 }
 
-.card-display {
-  margin-top: 2rem;
+.card-container {
+  perspective: 1000px;
+  width: 200px;
+  margin: 2rem auto;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+  cursor: pointer;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+}
+
+.card-front {
+  z-index: 2;
+}
+
+.card-back {
+  transform: rotateY(180deg);
   background: rgba(255, 255, 255, 0.1);
   padding: 1rem;
-  border-radius: 15px;
 }
 
 .card-image {
   display: block;
   width: 200px;
   height: auto;
-  margin: 1rem auto;
+  margin: 0 auto 1rem;
   border-radius: 10px;
   box-shadow: 0 0 10px white;
-  border: 3px solid red; 
+  border: 3px solid red;
 }
