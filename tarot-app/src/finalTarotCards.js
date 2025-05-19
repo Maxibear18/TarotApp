@@ -109,6 +109,7 @@ const tarotCards = [
     image: "/images/the_world.jpg",
     meaning: "Completion, fulfillment, and unity. The World signifies the successful conclusion of a journey, wholeness, and the opening of new chapters with wisdom and accomplishment.",
   },
+  /////////////////////////////////////////////////////////////////////////////////////
 
   {
     name: "Ace of Swords",
