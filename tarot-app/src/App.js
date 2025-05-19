@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import tarotCards from "./finalTarotCards";
 import "./App.css";
 
+
+const spreadInfo = {
+  title: "One Card Draw",
+  description: "A quick insight into your current situation or question. Simple and powerful."
+};
+
 function App() {
   const [card, setCard] = useState(null);
   const [flipped, setFlipped] = useState(false);
@@ -26,7 +32,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* Menu Button */}
+      {/* Menu Icon */}
       <div className="menu-icon" onClick={toggleMenu}>
         ☰
       </div>
@@ -35,11 +41,16 @@ function App() {
       {menuOpen && (
         <div className="menu-dropdown">
           <p onClick={drawCard}>🔹 One Card Draw</p>
-          {/* More spreads later */}
+          {/* Additional spreads can be added here */}
         </div>
       )}
 
+      {/* Title + Spread Description */}
       <h1>🔮 Tarot Card Draw</h1>
+      <p className="spread-description">
+        <strong>{spreadInfo.title}:</strong> {spreadInfo.description}
+      </p>
+
       <button onClick={drawCard}>Draw a Card</button>
 
       {card && (
