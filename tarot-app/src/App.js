@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from "react";
+import tarotCards from "./tarotCards";
+import "./App.css";
 
 function App() {
+  const [card, setCard] = useState(null);
+
+  const drawCard = () => {
+    const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+    setCard(random);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>🔮 Tarot Card Draw</h1>
+      <button onClick={drawCard}>Draw a Card</button>
+
+      {card && (
+        <div className="card-display">
+          <img src={card.image} alt={card.name} className="card-image" />
+          <h2>{card.name}</h2>
+          <p>{card.meaning}</p>
+        </div>
+      )}
     </div>
   );
 }
