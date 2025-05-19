@@ -7,10 +7,15 @@ function App() {
   const [flipped, setFlipped] = useState(false);
 
   const drawCard = () => {
+  setFlipped(false); 
+  setCard(null);     
+
+  setTimeout(() => {
     const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
     setCard(random);
-    setFlipped(false); 
-  };
+  }, 10); 
+};
+
 
   const handleFlip = () => {
     setFlipped(true);
