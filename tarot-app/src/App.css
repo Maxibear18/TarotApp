@@ -4,6 +4,12 @@
   background: linear-gradient(to bottom right, #4b0082, #8a2be2);
   color: white;
   min-height: 100vh;
+  position: relative; 
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 2.5rem;
 }
 
 button {
@@ -15,6 +21,38 @@ button {
   border-radius: 10px;
   margin: 1rem;
   cursor: pointer;
+}
+
+.menu-icon {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  z-index: 100;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 3.5rem;
+  left: 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: left;
+  z-index: 99;
+}
+
+.menu-dropdown p {
+  margin: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.menu-dropdown p:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .card-container {

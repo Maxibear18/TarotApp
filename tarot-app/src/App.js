@@ -5,24 +5,40 @@ import "./App.css";
 function App() {
   const [card, setCard] = useState(null);
   const [flipped, setFlipped] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const drawCard = () => {
-  setFlipped(false); 
-  setCard(null);     
-
-  setTimeout(() => {
-    const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-    setCard(random);
-  }, 10); 
-};
-
+    setFlipped(false);
+    setCard(null);
+    setTimeout(() => {
+      const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+      setCard(random);
+    }, 10);
+  };
 
   const handleFlip = () => {
     setFlipped(true);
   };
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <div className="App">
+      {/* Menu Button */}
+      <div className="menu-icon" onClick={toggleMenu}>
+        ☰
+      </div>
+
+      {/* Dropdown Menu */}
+      {menuOpen && (
+        <div className="menu-dropdown">
+          <p onClick={drawCard}>🔹 One Card Draw</p>
+          {/* More spreads later */}
+        </div>
+      )}
+
       <h1>🔮 Tarot Card Draw</h1>
       <button onClick={drawCard}>Draw a Card</button>
 
