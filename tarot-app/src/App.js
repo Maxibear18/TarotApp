@@ -1,6 +1,5 @@
-// src/App.js
 import React, { useState } from "react";
-import tarotCards from "./tarotCards";
+import tarotCards from "./finalTarotCards";
 import "./App.css";
 
 function App() {
