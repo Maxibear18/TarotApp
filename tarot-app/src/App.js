@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import tarotCards from "./finalTarotCards";
 import "./App.css";
 
-
 const spreadInfo = {
   title: "One Card Draw",
   description: "A quick insight into your current situation or question. Simple and powerful."
@@ -32,39 +31,43 @@ function App() {
 
   return (
     <div className="App">
-      {/* Menu Icon */}
-      <div className="menu-icon" onClick={toggleMenu}>
-        ☰
+      <div className="header-bar">
+        <div className="menu-icon" onClick={toggleMenu}>☰</div>
+        <h1>🔮 Tarot Card Draw</h1>
       </div>
 
-      {/* Dropdown Menu */}
       {menuOpen && (
         <div className="menu-dropdown">
           <p onClick={drawCard}>🔹 One Card Draw</p>
-          {/* Additional spreads can be added here */}
         </div>
       )}
 
-      {/* Title + Spread Description */}
-      <h1>🔮 Tarot Card Draw</h1>
-      <p className="spread-description">
-        <strong>{spreadInfo.title}:</strong> {spreadInfo.description}
-      </p>
+      <div className="spread-info">
+        <div className="spread-title">{spreadInfo.title}</div>
+        <div className="spread-description">{spreadInfo.description}</div>
+      </div>
 
       <button onClick={drawCard}>Draw a Card</button>
 
       {card && (
-        <div className="card-container" onClick={handleFlip}>
-          <div className={`card-inner ${flipped ? "flipped" : ""}`}>
-            <div className="card-front">
-              <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
+        <div className="card-area">
+          <div className="card-container" onClick={handleFlip}>
+            <div className={`card-inner ${flipped ? "flipped" : ""}`}>
+              <div className="card-front">
+                <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
+              </div>
+              <div className="card-back">
+                <img src={card.image} alt={card.name} className="card-image" />
+              </div>
             </div>
-            <div className="card-back">
-              <img src={card.image} alt={card.name} className="card-image" />
+          </div>
+
+          {flipped && (
+            <div className="card-details">
               <h2>{card.name}</h2>
               <p>{card.meaning}</p>
             </div>
-          </div>
+          )}
         </div>
       )}
     </div>
