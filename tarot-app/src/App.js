@@ -30,7 +30,8 @@ function App() {
     setTimeout(() => {
       if (spreadType === "one") {
         const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-        setCard(random);
+        const reversed = Math.random() < 0.5;
+        setCard({ ...random, reversed });
       } else if (spreadType === "ppf") {
         const selected = [];
         const drawnNames = new Set();
@@ -38,8 +39,8 @@ function App() {
         while (selected.length < 3) {
           const draw = tarotCards[Math.floor(Math.random() * tarotCards.length)];
           if (!drawnNames.has(draw.name)) {
-            selected.push(draw);
             drawnNames.add(draw.name);
+            selected.push({ ...draw, reversed: Math.random() < 0.5 });
           }
         }
         setCards(selected);
@@ -65,7 +66,7 @@ function App() {
     <div className="App">
       <div className="header-bar">
         <div className="menu-icon" onClick={toggleMenu}>☰</div>
-        <h1>🔮 Tarot Card Draw</h1>
+        <h1>🔮 Tarot Card Draw 🔮</h1>
       </div>
 
       {menuOpen && (
@@ -105,14 +106,18 @@ function App() {
                 <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
               </div>
               <div className="card-back">
-                <img src={card.image} alt={card.name} className="card-image" />
+                <img
+                  src={card.image}
+                  alt={card.name}
+                  className={`card-image ${card.reversed ? "reversed" : ""}`}
+                />
               </div>
             </div>
           </div>
           {flipped && (
             <div className="card-details">
-              <h2>{card.name}</h2>
-              <p>{card.meaning}</p>
+              <h2>{card.name} {card.reversed ? "(Reversed)" : ""}</h2>
+              <p>{card.reversed ? card.reversedMeaning : card.meaning}</p>
             </div>
           )}
         </div>
@@ -130,14 +135,18 @@ function App() {
                     <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
                   </div>
                   <div className="card-back">
-                    <img src={cards[index].image} alt={cards[index].name} className="card-image" />
+                    <img
+                      src={cards[index].image}
+                      alt={cards[index].name}
+                      className={`card-image ${cards[index].reversed ? "reversed" : ""}`}
+                    />
                   </div>
                 </div>
               </div>
               {ppfFlipped[index] && (
                 <div className="card-details">
-                  <h3>{cards[index].name}</h3>
-                  <p>{cards[index].meaning}</p>
+                  <h3>{cards[index].name} {cards[index].reversed ? "(Reversed)" : ""}</h3>
+                  <p>{cards[index].reversed ? cards[index].reversedMeaning : cards[index].meaning}</p>
                 </div>
               )}
             </div>
@@ -145,7 +154,7 @@ function App() {
         </div>
       )}
 
-      <div className="version-label">V 1.1</div>
+      <div className="version-label">V 1.3</div>
     </div>
   );
 }
