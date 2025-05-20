@@ -38,7 +38,15 @@ function App() {
 
       {menuOpen && (
         <div className="menu-dropdown">
-          <p onClick={drawCard}>🔹 One Card Draw</p>
+          <p
+            onClick={() => {
+              setCard(null);
+              setFlipped(false);
+              setMenuOpen(false);
+            }}
+          >
+            🔹 One Card Draw
+          </p>
         </div>
       )}
 
