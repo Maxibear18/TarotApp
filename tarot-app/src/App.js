@@ -33,10 +33,13 @@ function App() {
         setCard(random);
       } else if (spreadType === "ppf") {
         const selected = [];
+        const drawnNames = new Set();
+
         while (selected.length < 3) {
           const draw = tarotCards[Math.floor(Math.random() * tarotCards.length)];
-          if (!selected.find(c => c.name === draw.name)) {
+          if (!drawnNames.has(draw.name)) {
             selected.push(draw);
+            drawnNames.add(draw.name);
           }
         }
         setCards(selected);
