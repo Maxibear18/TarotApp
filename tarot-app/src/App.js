@@ -65,7 +65,7 @@ function App() {
     <div className="App">
       <div className="header-bar">
         <div className="menu-icon" onClick={toggleMenu}>☰</div>
-        <h1>🔮 Tarot Card Draw</h1>
+        <h1>🔮 Tarot Card Draw 🔮</h1>
       </div>
 
       {menuOpen && (
@@ -145,7 +145,7 @@ function App() {
         </div>
       )}
 
-      <div className="version-label">V 1.1</div>
+      <div className="version-label">V 1.2</div>
     </div>
   );
 }
