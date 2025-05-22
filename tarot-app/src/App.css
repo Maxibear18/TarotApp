@@ -259,6 +259,7 @@ button {
 .card-container.floating {
   animation: float 3s ease-in-out infinite;
   transform-style: preserve-3d;
+  filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.4));
 }
 
 @keyframes float {
