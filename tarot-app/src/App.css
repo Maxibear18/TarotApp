@@ -15,6 +15,8 @@ body, html {
   padding-bottom: 4rem;
 }
 
+
+
 .header-bar {
   width: 100%;
   background-color: black;
@@ -136,6 +138,7 @@ button {
   width: 100%;
   height: auto;
   border-radius: 10px;
+  border: 3px solid transparent;
   box-shadow: 0 0 10px white;
   border: 3px solid red;
 }
@@ -266,4 +269,29 @@ button {
   0%   { transform: translateY(0px); }
   50%  { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
+}
+
+.glow-cups {
+  box-shadow: 0 0 20px rgba(0, 162, 255, 0.8);
+  border-color: rgba(0, 162, 255, 0.5);
+}
+
+.glow-swords {
+  box-shadow: 0 0 20px rgba(200, 200, 200, 0.8);
+  border-color: rgba(200, 200, 200, 0.5);
+}
+
+.glow-wands {
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+  border-color: rgba(255, 140, 0, 0.5);
+}
+
+.glow-pentacles {
+  box-shadow: 0 0 20px rgba(50, 205, 50, 0.8);
+  border-color: rgba(50, 205, 50, 0.5);
+}
+
+.glow-major {
+  box-shadow: 0 0 25px white;
+  border-color: rgba(255, 255, 255, 0.6);
 }

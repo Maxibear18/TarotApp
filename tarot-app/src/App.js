@@ -254,9 +254,41 @@ function App() {
   );
 }
 
+function getCardGlow(name) {
+  const lower = name.toLowerCase();
+  if (lower.includes("cups")) return "glow-cups";
+  if (lower.includes("swords")) return "glow-swords";
+  if (lower.includes("wands")) return "glow-wands";
+  if (lower.includes("pentacles") || lower.includes("coins")) return "glow-pentacles";
+  return "glow-major";
+}
+
+function resetTilt(e) {
+  e.currentTarget.style.transform = `rotateX(0deg) rotateY(0deg)`;
+}
+
+function handleCardTilt(e) {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const rotateX = -(y - centerY) / 15;
+  const rotateY = (x - centerX) / 15;
+  card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+}
+
+
+
 const CardView = ({ card, flipped, onFlip }) => (
   <>
-    <div className={`card-container ${flipped ? "floating" : ""}`} onClick={onFlip}>
+    <div
+      className={`card-container ${flipped ? "floating" : ""}`}
+      onClick={onFlip}
+      onMouseMove={handleCardTilt}
+      onMouseLeave={resetTilt}
+    >
       <div className={`card-inner ${flipped ? "flipped" : ""}`}>
         <div className="card-front">
           <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
@@ -265,7 +297,7 @@ const CardView = ({ card, flipped, onFlip }) => (
           <img
             src={card.image}
             alt={card.name}
-            className={`card-image ${card.reversed ? "reversed" : ""}`}
+            className={`card-image ${card.reversed ? "reversed" : ""} ${getCardGlow(card.name)}`}
           />
         </div>
       </div>
@@ -285,6 +317,7 @@ const CardWithNumber = ({ number, label, card, flipped, onFlip }) => (
     <CardView card={card} flipped={flipped} onFlip={onFlip} />
   </div>
 );
+
 
 
 
