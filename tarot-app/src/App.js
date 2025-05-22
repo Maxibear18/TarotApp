@@ -11,6 +11,14 @@ const spreadDetails = {
     title: "Past, Present, Future",
     description: "Gain clarity from the past, awareness in the present, and insight into the future.",
   },
+  purpose: {
+    title: "Passion & Purpose Spread",
+    description: "Clarify life purpose and creative direction through five insightful cards.",
+  },
+  why: {
+    title: '"Why" Spread',
+    description: "Explore the deeper reasons behind your situation and what to do about it.",
+  },
 };
 
 function App() {
@@ -18,25 +26,26 @@ function App() {
   const [card, setCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [flipped, setFlipped] = useState(false);
-  const [ppfFlipped, setPpfFlipped] = useState([false, false, false]);
+  const [multiFlipped, setMultiFlipped] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const drawCard = () => {
     setFlipped(false);
     setCard(null);
     setCards([]);
-    setPpfFlipped([false, false, false]);
+    setMultiFlipped([]);
 
     setTimeout(() => {
+      const drawnNames = new Set();
+
       if (spreadType === "one") {
         const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
         const reversed = Math.random() < 0.5;
         setCard({ ...random, reversed });
-      } else if (spreadType === "ppf") {
+      } else {
+        const count = spreadType === "ppf" ? 3 : 5;
         const selected = [];
-        const drawnNames = new Set();
-
-        while (selected.length < 3) {
+        while (selected.length < count) {
           const draw = tarotCards[Math.floor(Math.random() * tarotCards.length)];
           if (!drawnNames.has(draw.name)) {
             drawnNames.add(draw.name);
@@ -44,6 +53,7 @@ function App() {
           }
         }
         setCards(selected);
+        setMultiFlipped(new Array(count).fill(false));
       }
     }, 10);
   };
@@ -52,10 +62,10 @@ function App() {
     setFlipped(true);
   };
 
-  const handlePpfFlip = (index) => {
-    const updated = [...ppfFlipped];
+  const handleMultiFlip = (index) => {
+    const updated = [...multiFlipped];
     updated[index] = true;
-    setPpfFlipped(updated);
+    setMultiFlipped(updated);
   };
 
   const toggleMenu = () => {
@@ -76,7 +86,7 @@ function App() {
             setCard(null);
             setCards([]);
             setFlipped(false);
-            setPpfFlipped([false, false, false]);
+            setMultiFlipped([]);
             setMenuOpen(false);
           }}>🔹 One Card Draw</p>
           <p onClick={() => {
@@ -84,9 +94,25 @@ function App() {
             setCard(null);
             setCards([]);
             setFlipped(false);
-            setPpfFlipped([false, false, false]);
+            setMultiFlipped([false, false, false]);
             setMenuOpen(false);
           }}>🔹 Past, Present, Future</p>
+          <p onClick={() => {
+            setSpreadType("purpose");
+            setCard(null);
+            setCards([]);
+            setFlipped(false);
+            setMultiFlipped([false, false, false, false, false]);
+            setMenuOpen(false);
+          }}>🔹 Passion & Purpose</p>
+          <p onClick={() => {
+            setSpreadType("why");
+            setCard(null);
+            setCards([]);
+            setFlipped(false);
+            setMultiFlipped([false, false, false, false, false]);
+            setMenuOpen(false);
+          }}>🔹 "Why" Spread</p>
         </div>
       )}
 
@@ -100,26 +126,7 @@ function App() {
       {/* One Card Draw */}
       {spreadType === "one" && card && (
         <div className="card-area">
-          <div className="card-container" onClick={handleFlip}>
-            <div className={`card-inner ${flipped ? "flipped" : ""}`}>
-              <div className="card-front">
-                <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
-              </div>
-              <div className="card-back">
-                <img
-                  src={card.image}
-                  alt={card.name}
-                  className={`card-image ${card.reversed ? "reversed" : ""}`}
-                />
-              </div>
-            </div>
-          </div>
-          {flipped && (
-            <div className="card-details">
-              <h2>{card.name} {card.reversed ? "(Reversed)" : ""}</h2>
-              <p>{card.reversed ? card.reversedMeaning : card.meaning}</p>
-            </div>
-          )}
+          <CardView card={card} flipped={flipped} onFlip={handleFlip} />
         </div>
       )}
 
@@ -129,34 +136,189 @@ function App() {
           {["Past", "Present", "Future"].map((label, index) => (
             <div key={label} className="ppf-card-column">
               <h3 className="ppf-label">{label}</h3>
-              <div className="card-container" onClick={() => handlePpfFlip(index)}>
-                <div className={`card-inner ${ppfFlipped[index] ? "flipped" : ""}`}>
-                  <div className="card-front">
-                    <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
-                  </div>
-                  <div className="card-back">
-                    <img
-                      src={cards[index].image}
-                      alt={cards[index].name}
-                      className={`card-image ${cards[index].reversed ? "reversed" : ""}`}
-                    />
-                  </div>
-                </div>
-              </div>
-              {ppfFlipped[index] && (
-                <div className="card-details">
-                  <h3>{cards[index].name} {cards[index].reversed ? "(Reversed)" : ""}</h3>
-                  <p>{cards[index].reversed ? cards[index].reversedMeaning : cards[index].meaning}</p>
-                </div>
-              )}
+              <CardView card={cards[index]} flipped={multiFlipped[index]} onFlip={() => handleMultiFlip(index)} />
             </div>
           ))}
         </div>
       )}
 
-      <div className="version-label">V 1.3</div>
+      {/* Passion & Purpose Spread */}
+      {spreadType === "purpose" && cards.length === 5 && (
+        <div className="v-spread">
+          {/* Top Row */}
+          <div className="v-row">
+            <CardWithNumber
+              number={1}
+              label="What drives you"
+              card={cards[0]}
+              flipped={multiFlipped[0]}
+              onFlip={() => handleMultiFlip(0)}
+            />
+            <div className="v-spacer" />
+            <CardWithNumber
+              number={2}
+              label="Where to focus"
+              card={cards[1]}
+              flipped={multiFlipped[1]}
+              onFlip={() => handleMultiFlip(1)}
+            />
+          </div>
+
+          {/* Center Row */}
+          <div className="v-row center-row">
+            <CardWithNumber
+              number={3}
+              label="Hidden talents"
+              card={cards[2]}
+              flipped={multiFlipped[2]}
+              onFlip={() => handleMultiFlip(2)}
+            />
+          </div>
+
+          {/* Bottom Row */}
+          <div className="v-row">
+            <CardWithNumber
+              number={4}
+              label="What holds you back"
+              card={cards[3]}
+              flipped={multiFlipped[3]}
+              onFlip={() => handleMultiFlip(3)}
+            />
+            <div className="v-spacer" />
+            <CardWithNumber
+              number={5}
+              label="Long-term potential"
+              card={cards[4]}
+              flipped={multiFlipped[4]}
+              onFlip={() => handleMultiFlip(4)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Why Spread (Cross Layout) */}
+      {spreadType === "why" && cards.length === 5 && (
+        <div className="why-spread-grid">
+          <div className="why-row">
+            <div className="why-slot" />
+            <CardWithNumber
+              number={5}
+              label="Outcome if you change"
+              card={cards[4]}
+              flipped={multiFlipped[4]}
+              onFlip={() => handleMultiFlip(4)}
+            />
+            <div className="why-slot" />
+          </div>
+
+          <div className="why-row">
+            <CardWithNumber
+              number={4}
+              label="What you can do"
+              card={cards[3]}
+              flipped={multiFlipped[3]}
+              onFlip={() => handleMultiFlip(3)}
+            />
+            <CardWithNumber
+              number={1}
+              label="Current situation"
+              card={cards[0]}
+              flipped={multiFlipped[0]}
+              onFlip={() => handleMultiFlip(0)}
+            />
+            <CardWithNumber
+              number={2}
+              label="The response"
+              card={cards[1]}
+              flipped={multiFlipped[1]}
+              onFlip={() => handleMultiFlip(1)}
+            />
+          </div>
+
+          <div className="why-row">
+            <div className="why-slot" />
+            <CardWithNumber
+              number={3}
+              label="What holds you back"
+              card={cards[2]}
+              flipped={multiFlipped[2]}
+              onFlip={() => handleMultiFlip(2)}
+            />
+            <div className="why-slot" />
+          </div>
+        </div>
+      )}
+
+      <div className="version-label">V 1.5</div>
     </div>
   );
 }
+
+function getCardGlow(name) {
+  const lower = name.toLowerCase();
+  if (lower.includes("cups")) return "glow-cups";
+  if (lower.includes("swords")) return "glow-swords";
+  if (lower.includes("wands")) return "glow-wands";
+  if (lower.includes("pentacles") || lower.includes("coins")) return "glow-pentacles";
+  return "glow-major";
+}
+
+function resetTilt(e) {
+  e.currentTarget.style.transform = `rotateX(0deg) rotateY(0deg)`;
+}
+
+function handleCardTilt(e) {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const rotateX = -(y - centerY) / 15;
+  const rotateY = (x - centerX) / 15;
+  card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+}
+
+
+
+const CardView = ({ card, flipped, onFlip }) => (
+  <>
+    <div
+      className={`card-container ${flipped ? "floating" : ""}`}
+      onClick={onFlip}
+      onMouseMove={handleCardTilt}
+      onMouseLeave={resetTilt}
+    >
+      <div className={`card-inner ${flipped ? "flipped" : ""}`}>
+        <div className="card-front">
+          <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
+        </div>
+        <div className="card-back">
+          <img
+            src={card.image}
+            alt={card.name}
+            className={`card-image ${card.reversed ? "reversed" : ""} ${getCardGlow(card.name)}`}
+          />
+        </div>
+      </div>
+    </div>
+    {flipped && (
+      <div className="card-details">
+        <h3>{card.name} {card.reversed ? "(Reversed)" : ""}</h3>
+        <p>{card.reversed ? card.reversedMeaning : card.meaning}</p>
+      </div>
+    )}
+  </>
+);
+
+const CardWithNumber = ({ number, label, card, flipped, onFlip }) => (
+  <div className="ppf-card-column">
+    <h3 className="ppf-label">{number} - {label}</h3>
+    <CardView card={card} flipped={flipped} onFlip={onFlip} />
+  </div>
+);
+
+
+
 
 export default App;

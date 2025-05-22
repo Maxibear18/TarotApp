@@ -15,6 +15,8 @@ body, html {
   padding-bottom: 4rem;
 }
 
+
+
 .header-bar {
   width: 100%;
   background-color: black;
@@ -136,8 +138,9 @@ button {
   width: 100%;
   height: auto;
   border-radius: 10px;
-  box-shadow: 0 0 10px white;
-  border: 3px solid red;
+  border: 3px solid red; 
+  box-shadow: none;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .card-details {
@@ -181,4 +184,114 @@ button {
 
 .card-image.reversed {
   transform: rotate(180deg);
+}
+
+.v-spread {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.v-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.v-spacer {
+  width: 200px;
+  visibility: hidden;
+}
+
+.center-row {
+  justify-content: center;
+}
+
+.why-spread {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.why-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.why-row.center-row {
+  height: 0;
+}
+
+.why-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+}
+
+.empty-slot {
+  visibility: hidden;
+  width: 220px;
+}
+
+
+.why-spread-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.why-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.why-slot {
+  width: 220px;
+  visibility: hidden;
+}
+
+.card-container.floating {
+  animation: float 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.4));
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.glow-cups {
+  border-color: #00a2ff;
+  box-shadow: 0 0 20px rgba(0, 162, 255, 0.8);
+}
+
+.glow-swords {
+  border-color: #ffffff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.85);
+}
+
+.glow-wands {
+  border-color: #ff8c00;
+  box-shadow: 0 0 20px rgba(255, 140, 0, 0.8);
+}
+
+.glow-pentacles {
+  border-color: #32cd32;
+  box-shadow: 0 0 20px rgba(50, 205, 50, 0.8);
+}
+
+.glow-major {
+  border-color: #ffd700;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
 }
