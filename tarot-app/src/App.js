@@ -11,6 +11,10 @@ const spreadDetails = {
     title: "Past, Present, Future",
     description: "Gain clarity from the past, awareness in the present, and insight into the future.",
   },
+  purpose: {
+    title: "Passion & Purpose Spread",
+    description: "Clarify life purpose and creative direction through five insightful cards.",
+  },
 };
 
 function App() {
@@ -18,14 +22,14 @@ function App() {
   const [card, setCard] = useState(null);
   const [cards, setCards] = useState([]);
   const [flipped, setFlipped] = useState(false);
-  const [ppfFlipped, setPpfFlipped] = useState([false, false, false]);
+  const [multiFlipped, setMultiFlipped] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const drawCard = () => {
     setFlipped(false);
     setCard(null);
     setCards([]);
-    setPpfFlipped([false, false, false]);
+    setMultiFlipped([]);
 
     setTimeout(() => {
       if (spreadType === "one") {
@@ -35,7 +39,6 @@ function App() {
       } else if (spreadType === "ppf") {
         const selected = [];
         const drawnNames = new Set();
-
         while (selected.length < 3) {
           const draw = tarotCards[Math.floor(Math.random() * tarotCards.length)];
           if (!drawnNames.has(draw.name)) {
@@ -44,6 +47,19 @@ function App() {
           }
         }
         setCards(selected);
+        setMultiFlipped([false, false, false]);
+      } else if (spreadType === "purpose") {
+        const selected = [];
+        const drawnNames = new Set();
+        while (selected.length < 5) {
+          const draw = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+          if (!drawnNames.has(draw.name)) {
+            drawnNames.add(draw.name);
+            selected.push({ ...draw, reversed: Math.random() < 0.5 });
+          }
+        }
+        setCards(selected);
+        setMultiFlipped([false, false, false, false, false]);
       }
     }, 10);
   };
@@ -52,10 +68,10 @@ function App() {
     setFlipped(true);
   };
 
-  const handlePpfFlip = (index) => {
-    const updated = [...ppfFlipped];
+  const handleMultiFlip = (index) => {
+    const updated = [...multiFlipped];
     updated[index] = true;
-    setPpfFlipped(updated);
+    setMultiFlipped(updated);
   };
 
   const toggleMenu = () => {
@@ -76,7 +92,7 @@ function App() {
             setCard(null);
             setCards([]);
             setFlipped(false);
-            setPpfFlipped([false, false, false]);
+            setMultiFlipped([]);
             setMenuOpen(false);
           }}>🔹 One Card Draw</p>
           <p onClick={() => {
@@ -84,9 +100,17 @@ function App() {
             setCard(null);
             setCards([]);
             setFlipped(false);
-            setPpfFlipped([false, false, false]);
+            setMultiFlipped([false, false, false]);
             setMenuOpen(false);
           }}>🔹 Past, Present, Future</p>
+          <p onClick={() => {
+            setSpreadType("purpose");
+            setCard(null);
+            setCards([]);
+            setFlipped(false);
+            setMultiFlipped([false, false, false, false, false]);
+            setMenuOpen(false);
+          }}>🔹 Passion & Purpose</p>
         </div>
       )}
 
@@ -123,14 +147,14 @@ function App() {
         </div>
       )}
 
-      {/* Past Present Future */}
+      {/* Past Present Future Spread */}
       {spreadType === "ppf" && cards.length === 3 && (
         <div className="ppf-area">
           {["Past", "Present", "Future"].map((label, index) => (
             <div key={label} className="ppf-card-column">
               <h3 className="ppf-label">{label}</h3>
-              <div className="card-container" onClick={() => handlePpfFlip(index)}>
-                <div className={`card-inner ${ppfFlipped[index] ? "flipped" : ""}`}>
+              <div className="card-container" onClick={() => handleMultiFlip(index)}>
+                <div className={`card-inner ${multiFlipped[index] ? "flipped" : ""}`}>
                   <div className="card-front">
                     <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
                   </div>
@@ -143,7 +167,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              {ppfFlipped[index] && (
+              {multiFlipped[index] && (
                 <div className="card-details">
                   <h3>{cards[index].name} {cards[index].reversed ? "(Reversed)" : ""}</h3>
                   <p>{cards[index].reversed ? cards[index].reversedMeaning : cards[index].meaning}</p>
@@ -153,6 +177,92 @@ function App() {
           ))}
         </div>
       )}
+
+      {spreadType === "purpose" && cards.length === 5 && (
+      <div className="v-spread">
+        <div className="v-row v-top">
+          {[0, 1].map((index) => (
+            <div key={index} className="ppf-card-column">
+              <h3 className="ppf-label">{["What drives you", "Hidden talents"][index]}</h3>
+              <div className="card-container" onClick={() => handleMultiFlip(index)}>
+                <div className={`card-inner ${multiFlipped[index] ? "flipped" : ""}`}>
+                  <div className="card-front">
+                    <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
+                  </div>
+                  <div className="card-back">
+                    <img
+                      src={cards[index].image}
+                      alt={cards[index].name}
+                      className={`card-image ${cards[index].reversed ? "reversed" : ""}`}
+                    />
+                  </div>
+                </div>
+              </div>
+              {multiFlipped[index] && (
+                <div className="card-details">
+                  <h3>{cards[index].name} {cards[index].reversed ? "(Reversed)" : ""}</h3>
+                  <p>{cards[index].reversed ? cards[index].reversedMeaning : cards[index].meaning}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="v-row v-middle">
+          <div className="ppf-card-column">
+            <h3 className="ppf-label">What holds you back</h3>
+            <div className="card-container" onClick={() => handleMultiFlip(2)}>
+              <div className={`card-inner ${multiFlipped[2] ? "flipped" : ""}`}>
+                <div className="card-front">
+                  <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
+                </div>
+                <div className="card-back">
+                  <img
+                    src={cards[2].image}
+                    alt={cards[2].name}
+                    className={`card-image ${cards[2].reversed ? "reversed" : ""}`}
+                  />
+                </div>
+              </div>
+            </div>
+            {multiFlipped[2] && (
+              <div className="card-details">
+                <h3>{cards[2].name} {cards[2].reversed ? "(Reversed)" : ""}</h3>
+                <p>{cards[2].reversed ? cards[2].reversedMeaning : cards[2].meaning}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="v-row v-bottom">
+          {[3, 4].map((index) => (
+            <div key={index} className="ppf-card-column">
+              <h3 className="ppf-label">{["Where to focus", "Long-term potential"][index - 3]}</h3>
+              <div className="card-container" onClick={() => handleMultiFlip(index)}>
+                <div className={`card-inner ${multiFlipped[index] ? "flipped" : ""}`}>
+                  <div className="card-front">
+                    <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
+                  </div>
+                  <div className="card-back">
+                    <img
+                      src={cards[index].image}
+                      alt={cards[index].name}
+                      className={`card-image ${cards[index].reversed ? "reversed" : ""}`}
+                    />
+                  </div>
+                </div>
+              </div>
+              {multiFlipped[index] && (
+                <div className="card-details">
+                  <h3>{cards[index].name} {cards[index].reversed ? "(Reversed)" : ""}</h3>
+                  <p>{cards[index].reversed ? cards[index].reversedMeaning : cards[index].meaning}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
 
       <div className="version-label">V 1.3</div>
     </div>
