@@ -126,26 +126,7 @@ function App() {
       {/* One Card Draw */}
       {spreadType === "one" && card && (
         <div className="card-area">
-          <div className="card-container" onClick={handleFlip}>
-            <div className={`card-inner ${flipped ? "flipped" : ""}`}>
-              <div className="card-front">
-                <img src="/images/backing.jpg" alt="Card Back" className="card-image" />
-              </div>
-              <div className="card-back">
-                <img
-                  src={card.image}
-                  alt={card.name}
-                  className={`card-image ${card.reversed ? "reversed" : ""}`}
-                />
-              </div>
-            </div>
-          </div>
-          {flipped && (
-            <div className="card-details">
-              <h2>{card.name} {card.reversed ? "(Reversed)" : ""}</h2>
-              <p>{card.reversed ? card.reversedMeaning : card.meaning}</p>
-            </div>
-          )}
+          <CardView card={card} flipped={flipped} onFlip={handleFlip} />
         </div>
       )}
 
@@ -275,7 +256,7 @@ function App() {
 
 const CardView = ({ card, flipped, onFlip }) => (
   <>
-    <div className="card-container" onClick={onFlip}>
+    <div className={`card-container ${flipped ? "floating" : ""}`} onClick={onFlip}>
       <div className={`card-inner ${flipped ? "flipped" : ""}`}>
         <div className="card-front">
           <img src="/images/backing.jpg" alt="Card Back" className="card-image" />

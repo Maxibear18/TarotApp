@@ -255,3 +255,14 @@ button {
   width: 220px;
   visibility: hidden;
 }
+
+.card-container.floating {
+  animation: float 3s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
