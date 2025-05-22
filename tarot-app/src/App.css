@@ -208,3 +208,53 @@ button {
 .v-bottom {
   transform: translateY(20px);
 }
+
+.why-spread {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.why-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.why-row.center-row {
+  height: 0;
+}
+
+.why-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+}
+
+.empty-slot {
+  visibility: hidden;
+  width: 220px;
+}
+
+
+.why-spread-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.why-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.why-slot {
+  width: 220px;
+  visibility: hidden;
+}
