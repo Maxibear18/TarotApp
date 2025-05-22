@@ -187,7 +187,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   margin-top: 2rem;
 }
 
@@ -197,16 +197,13 @@ button {
   gap: 2rem;
 }
 
-.v-top {
-  transform: translateY(20px);
+.v-spacer {
+  width: 200px;
+  visibility: hidden;
 }
 
-.v-middle {
-  transform: translateY(0);
-}
-
-.v-bottom {
-  transform: translateY(20px);
+.center-row {
+  justify-content: center;
 }
 
 .why-spread {

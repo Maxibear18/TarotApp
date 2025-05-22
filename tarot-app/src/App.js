@@ -164,37 +164,53 @@ function App() {
       {/* Passion & Purpose Spread */}
       {spreadType === "purpose" && cards.length === 5 && (
         <div className="v-spread">
+          {/* Top Row */}
           <div className="v-row">
-            <div className="v-card">
-              <h3 className="ppf-label">What drives you</h3>
-              <CardView card={cards[0]} flipped={multiFlipped[0]} onFlip={() => handleMultiFlip(0)} />
-            </div>
+            <CardWithNumber
+              number={1}
+              label="What drives you"
+              card={cards[0]}
+              flipped={multiFlipped[0]}
+              onFlip={() => handleMultiFlip(0)}
+            />
             <div className="v-spacer" />
-            <div className="v-card">
-              <h3 className="ppf-label">Long-term potential</h3>
-              <CardView card={cards[4]} flipped={multiFlipped[4]} onFlip={() => handleMultiFlip(4)} />
-            </div>
+            <CardWithNumber
+              number={2}
+              label="Where to focus"
+              card={cards[1]}
+              flipped={multiFlipped[1]}
+              onFlip={() => handleMultiFlip(1)}
+            />
           </div>
 
-          <div className="v-row">
-            <div className="v-spacer" />
-            <div className="v-card">
-              <h3 className="ppf-label">Hidden talents</h3>
-              <CardView card={cards[1]} flipped={multiFlipped[1]} onFlip={() => handleMultiFlip(1)} />
-            </div>
-            <div className="v-spacer" />
-            <div className="v-card">
-              <h3 className="ppf-label">Where to focus</h3>
-              <CardView card={cards[3]} flipped={multiFlipped[3]} onFlip={() => handleMultiFlip(3)} />
-            </div>
-            <div className="v-spacer" />
+          {/* Center Row */}
+          <div className="v-row center-row">
+            <CardWithNumber
+              number={3}
+              label="Hidden talents"
+              card={cards[2]}
+              flipped={multiFlipped[2]}
+              onFlip={() => handleMultiFlip(2)}
+            />
           </div>
 
-          <div className="v-row center">
-            <div className="v-card">
-              <h3 className="ppf-label">What holds you back</h3>
-              <CardView card={cards[2]} flipped={multiFlipped[2]} onFlip={() => handleMultiFlip(2)} />
-            </div>
+          {/* Bottom Row */}
+          <div className="v-row">
+            <CardWithNumber
+              number={4}
+              label="What holds you back"
+              card={cards[3]}
+              flipped={multiFlipped[3]}
+              onFlip={() => handleMultiFlip(3)}
+            />
+            <div className="v-spacer" />
+            <CardWithNumber
+              number={5}
+              label="Long-term potential"
+              card={cards[4]}
+              flipped={multiFlipped[4]}
+              onFlip={() => handleMultiFlip(4)}
+            />
           </div>
         </div>
       )}
