@@ -269,7 +269,7 @@ function App() {
               <li><strong>Wands:</strong> Creativity & action</li>
               <li><strong>Pentacles:</strong> Work & stability</li>
             </ul>
-            <li><strong>Upright = Clear energy.</strong> Reversed = Blocked or internal energy.</li>
+            <li><strong>Upright = Clear energy.</strong> <strong> Reversed = Blocked or internal energy. </strong></li>
             <li>Read the card meanings and trust your intuition to connect them to your situation.</li>
           </ul>
 
