@@ -250,25 +250,36 @@ function App() {
 
       {showGuide && (
         <div className="guide-modal">
-          <div className="guide-content">
-            <h2>📘 How to Use the Tarot App</h2>
-            <p>Welcome! Here's how to get started:</p>
-            <ul>
-              <li>Choose a spread using the ☰ menu in the top left.</li>
-              <li>Click the "Draw a Card" button to pull cards for your spread.</li>
-              <li>Click each card to flip and reveal its meaning.</li>
-              <li>Reversed cards appear upside down and have a reversed interpretation.</li>
-            </ul>
-            <h3>🃏 Understanding Tarot</h3>
-            <p>
-              Each tarot card carries symbolic meaning. Upright cards reflect outward influences and clarity. Reversed cards may suggest internal conflict, delays, or blocked energy.
-            </p>
-            <button onClick={toggleGuide}>Close</button>
-          </div>
-        </div>
-      )}
+        <div className="guide-content">
+          <h2>📘 How to Use the Tarot App</h2>
+          <ul>
+            <li><strong>☰ Choose a Spread:</strong> Use the top-left menu to pick from different tarot spreads.</li>
+            <li><strong>🔮 Draw a Card:</strong> Tap the button to pull cards for your selected spread.</li>
+            <li><strong>🃏 Flip the Cards:</strong> Click each card to flip it and reveal its meaning.</li>
+            <li><strong>↕️ Reversed Cards:</strong> Cards flipped upside-down show reversed meanings.</li>
+          </ul>
 
-      <div className="version-label">V 1.5</div>
+          <h3>🧠 How to Read the Cards</h3>
+          <ul>
+            <li><strong>Major Arcana:</strong> Big life themes (The Fool, The Lovers, Death, etc).</li>
+            <li><strong>Minor Arcana:</strong> Everyday experiences, divided by suits:</li>
+            <ul>
+              <li><strong>Cups:</strong> Emotions & relationships</li>
+              <li><strong>Swords:</strong> Thoughts & challenges</li>
+              <li><strong>Wands:</strong> Creativity & action</li>
+              <li><strong>Pentacles:</strong> Work & stability</li>
+            </ul>
+            <li><strong>Upright = Clear energy.</strong> Reversed = Blocked or internal energy.</li>
+            <li>Read the card meanings and trust your intuition to connect them to your situation.</li>
+          </ul>
+
+          <button onClick={toggleGuide}>Close</button>
+        </div>
+      </div>
+    )}
+
+
+      <div className="version-label">V 1.4</div>
     </div>
   );
 }
