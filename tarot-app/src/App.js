@@ -28,6 +28,7 @@ function App() {
   const [flipped, setFlipped] = useState(false);
   const [multiFlipped, setMultiFlipped] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
 
   const drawCard = () => {
     setFlipped(false);
@@ -72,11 +73,16 @@ function App() {
     setMenuOpen(!menuOpen);
   };
 
+  const toggleGuide = () => {
+    setShowGuide(!showGuide);
+  };
+
   return (
     <div className="App">
       <div className="header-bar">
         <div className="menu-icon" onClick={toggleMenu}>☰</div>
         <h1>🔮 Tarot Card Draw 🔮</h1>
+        <div className="help-icon" onClick={toggleGuide}>❓</div>
       </div>
 
       {menuOpen && (
@@ -123,14 +129,12 @@ function App() {
 
       <button onClick={drawCard}>Draw a Card</button>
 
-      {/* One Card Draw */}
       {spreadType === "one" && card && (
         <div className="card-area">
           <CardView card={card} flipped={flipped} onFlip={handleFlip} />
         </div>
       )}
 
-      {/* Past Present Future */}
       {spreadType === "ppf" && cards.length === 3 && (
         <div className="ppf-area">
           {["Past", "Present", "Future"].map((label, index) => (
@@ -142,10 +146,8 @@ function App() {
         </div>
       )}
 
-      {/* Passion & Purpose Spread */}
       {spreadType === "purpose" && cards.length === 5 && (
         <div className="v-spread">
-          {/* Top Row */}
           <div className="v-row">
             <CardWithNumber
               number={1}
@@ -164,7 +166,6 @@ function App() {
             />
           </div>
 
-          {/* Center Row */}
           <div className="v-row center-row">
             <CardWithNumber
               number={3}
@@ -175,7 +176,6 @@ function App() {
             />
           </div>
 
-          {/* Bottom Row */}
           <div className="v-row">
             <CardWithNumber
               number={4}
@@ -196,7 +196,6 @@ function App() {
         </div>
       )}
 
-      {/* Why Spread (Cross Layout) */}
       {spreadType === "why" && cards.length === 5 && (
         <div className="why-spread-grid">
           <div className="why-row">
@@ -249,6 +248,26 @@ function App() {
         </div>
       )}
 
+      {showGuide && (
+        <div className="guide-modal">
+          <div className="guide-content">
+            <h2>📘 How to Use the Tarot App</h2>
+            <p>Welcome! Here's how to get started:</p>
+            <ul>
+              <li>Choose a spread using the ☰ menu in the top left.</li>
+              <li>Click the "Draw a Card" button to pull cards for your spread.</li>
+              <li>Click each card to flip and reveal its meaning.</li>
+              <li>Reversed cards appear upside down and have a reversed interpretation.</li>
+            </ul>
+            <h3>🃏 Understanding Tarot</h3>
+            <p>
+              Each tarot card carries symbolic meaning. Upright cards reflect outward influences and clarity. Reversed cards may suggest internal conflict, delays, or blocked energy.
+            </p>
+            <button onClick={toggleGuide}>Close</button>
+          </div>
+        </div>
+      )}
+
       <div className="version-label">V 1.5</div>
     </div>
   );
@@ -278,8 +297,6 @@ function handleCardTilt(e) {
   const rotateY = (x - centerX) / 15;
   card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 }
-
-
 
 const CardView = ({ card, flipped, onFlip }) => (
   <>
@@ -317,8 +334,5 @@ const CardWithNumber = ({ number, label, card, flipped, onFlip }) => (
     <CardView card={card} flipped={flipped} onFlip={onFlip} />
   </div>
 );
-
-
-
 
 export default App;
