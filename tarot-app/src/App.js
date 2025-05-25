@@ -29,9 +29,10 @@ function App() {
   const [multiFlipped, setMultiFlipped] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-  const [viewAll, setViewAll] = useState(false);
+  const [viewAll, setViewAll] = useState(false); // NEW
 
   const drawCard = () => {
+    setViewAll(false); // Hide view-all if drawing a spread
     setFlipped(false);
     setCard(null);
     setCards([]);
@@ -39,7 +40,6 @@ function App() {
 
     setTimeout(() => {
       const drawnNames = new Set();
-
       if (spreadType === "one") {
         const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
         const reversed = Math.random() < 0.5;
@@ -60,23 +60,15 @@ function App() {
     }, 10);
   };
 
-  const handleFlip = () => {
-    setFlipped(true);
-  };
-
+  const handleFlip = () => setFlipped(true);
   const handleMultiFlip = (index) => {
     const updated = [...multiFlipped];
     updated[index] = true;
     setMultiFlipped(updated);
   };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const toggleGuide = () => {
-    setShowGuide(!showGuide);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleGuide = () => setShowGuide(!showGuide);
 
   return (
     <div className="App">
@@ -90,38 +82,38 @@ function App() {
         <div className="menu-dropdown">
           <p onClick={() => {
             setSpreadType("one");
+            setViewAll(false);
             setCard(null);
             setCards([]);
             setFlipped(false);
             setMultiFlipped([]);
-            setViewAll(false);
             setMenuOpen(false);
           }}>🔹 One Card Draw</p>
           <p onClick={() => {
             setSpreadType("ppf");
+            setViewAll(false);
             setCard(null);
             setCards([]);
             setFlipped(false);
             setMultiFlipped([false, false, false]);
-            setViewAll(false);
             setMenuOpen(false);
           }}>🔹 Past, Present, Future</p>
           <p onClick={() => {
             setSpreadType("purpose");
+            setViewAll(false);
             setCard(null);
             setCards([]);
             setFlipped(false);
             setMultiFlipped([false, false, false, false, false]);
-            setViewAll(false);
             setMenuOpen(false);
           }}>🔹 Passion & Purpose</p>
           <p onClick={() => {
             setSpreadType("why");
+            setViewAll(false);
             setCard(null);
             setCards([]);
             setFlipped(false);
             setMultiFlipped([false, false, false, false, false]);
-            setViewAll(false);
             setMenuOpen(false);
           }}>🔹 "Why" Spread</p>
           <p onClick={() => {
@@ -141,124 +133,63 @@ function App() {
             <div className="spread-title">{spreadDetails[spreadType].title}</div>
             <div className="spread-description">{spreadDetails[spreadType].description}</div>
           </div>
-
           <button onClick={drawCard}>Draw a Card</button>
-
-          {spreadType === "one" && card && (
-            <div className="card-area">
-              <CardView card={card} flipped={flipped} onFlip={handleFlip} />
-            </div>
-          )}
-
-          {spreadType === "ppf" && cards.length === 3 && (
-            <div className="ppf-area">
-              {["Past", "Present", "Future"].map((label, index) => (
-                <div key={label} className="ppf-card-column">
-                  <h3 className="ppf-label">{label}</h3>
-                  <CardView card={cards[index]} flipped={multiFlipped[index]} onFlip={() => handleMultiFlip(index)} />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {spreadType === "purpose" && cards.length === 5 && (
-            <div className="v-spread">
-              <div className="v-row">
-                <CardWithNumber
-                  number={1}
-                  label="What drives you"
-                  card={cards[0]}
-                  flipped={multiFlipped[0]}
-                  onFlip={() => handleMultiFlip(0)}
-                />
-                <div className="v-spacer" />
-                <CardWithNumber
-                  number={2}
-                  label="Where to focus"
-                  card={cards[1]}
-                  flipped={multiFlipped[1]}
-                  onFlip={() => handleMultiFlip(1)}
-                />
-              </div>
-              <div className="v-row center-row">
-                <CardWithNumber
-                  number={3}
-                  label="Hidden talents"
-                  card={cards[2]}
-                  flipped={multiFlipped[2]}
-                  onFlip={() => handleMultiFlip(2)}
-                />
-              </div>
-              <div className="v-row">
-                <CardWithNumber
-                  number={4}
-                  label="What holds you back"
-                  card={cards[3]}
-                  flipped={multiFlipped[3]}
-                  onFlip={() => handleMultiFlip(3)}
-                />
-                <div className="v-spacer" />
-                <CardWithNumber
-                  number={5}
-                  label="Long-term potential"
-                  card={cards[4]}
-                  flipped={multiFlipped[4]}
-                  onFlip={() => handleMultiFlip(4)}
-                />
-              </div>
-            </div>
-          )}
-
-          {spreadType === "why" && cards.length === 5 && (
-            <div className="why-spread-grid">
-              <div className="why-row">
-                <div className="why-slot" />
-                <CardWithNumber
-                  number={5}
-                  label="Outcome if you change"
-                  card={cards[4]}
-                  flipped={multiFlipped[4]}
-                  onFlip={() => handleMultiFlip(4)}
-                />
-                <div className="why-slot" />
-              </div>
-              <div className="why-row">
-                <CardWithNumber
-                  number={4}
-                  label="What you can do"
-                  card={cards[3]}
-                  flipped={multiFlipped[3]}
-                  onFlip={() => handleMultiFlip(3)}
-                />
-                <CardWithNumber
-                  number={1}
-                  label="Current situation"
-                  card={cards[0]}
-                  flipped={multiFlipped[0]}
-                  onFlip={() => handleMultiFlip(0)}
-                />
-                <CardWithNumber
-                  number={2}
-                  label="The response"
-                  card={cards[1]}
-                  flipped={multiFlipped[1]}
-                  onFlip={() => handleMultiFlip(1)}
-                />
-              </div>
-              <div className="why-row">
-                <div className="why-slot" />
-                <CardWithNumber
-                  number={3}
-                  label="What holds you back"
-                  card={cards[2]}
-                  flipped={multiFlipped[2]}
-                  onFlip={() => handleMultiFlip(2)}
-                />
-                <div className="why-slot" />
-              </div>
-            </div>
-          )}
         </>
+      )}
+
+      {spreadType === "one" && card && (
+        <div className="card-area">
+          <CardView card={card} flipped={flipped} onFlip={handleFlip} />
+        </div>
+      )}
+
+      {spreadType === "ppf" && cards.length === 3 && (
+        <div className="ppf-area">
+          {["Past", "Present", "Future"].map((label, index) => (
+            <div key={label} className="ppf-card-column">
+              <h3 className="ppf-label">{label}</h3>
+              <CardView card={cards[index]} flipped={multiFlipped[index]} onFlip={() => handleMultiFlip(index)} />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {spreadType === "purpose" && cards.length === 5 && (
+        <div className="v-spread">
+          <div className="v-row">
+            <CardWithNumber number={1} label="What drives you" card={cards[0]} flipped={multiFlipped[0]} onFlip={() => handleMultiFlip(0)} />
+            <div className="v-spacer" />
+            <CardWithNumber number={2} label="Where to focus" card={cards[1]} flipped={multiFlipped[1]} onFlip={() => handleMultiFlip(1)} />
+          </div>
+          <div className="v-row center-row">
+            <CardWithNumber number={3} label="Hidden talents" card={cards[2]} flipped={multiFlipped[2]} onFlip={() => handleMultiFlip(2)} />
+          </div>
+          <div className="v-row">
+            <CardWithNumber number={4} label="What holds you back" card={cards[3]} flipped={multiFlipped[3]} onFlip={() => handleMultiFlip(3)} />
+            <div className="v-spacer" />
+            <CardWithNumber number={5} label="Long-term potential" card={cards[4]} flipped={multiFlipped[4]} onFlip={() => handleMultiFlip(4)} />
+          </div>
+        </div>
+      )}
+
+      {spreadType === "why" && cards.length === 5 && (
+        <div className="why-spread-grid">
+          <div className="why-row">
+            <div className="why-slot" />
+            <CardWithNumber number={5} label="Outcome if you change" card={cards[4]} flipped={multiFlipped[4]} onFlip={() => handleMultiFlip(4)} />
+            <div className="why-slot" />
+          </div>
+          <div className="why-row">
+            <CardWithNumber number={4} label="What you can do" card={cards[3]} flipped={multiFlipped[3]} onFlip={() => handleMultiFlip(3)} />
+            <CardWithNumber number={1} label="Current situation" card={cards[0]} flipped={multiFlipped[0]} onFlip={() => handleMultiFlip(0)} />
+            <CardWithNumber number={2} label="The response" card={cards[1]} flipped={multiFlipped[1]} onFlip={() => handleMultiFlip(1)} />
+          </div>
+          <div className="why-row">
+            <div className="why-slot" />
+            <CardWithNumber number={3} label="What holds you back" card={cards[2]} flipped={multiFlipped[2]} onFlip={() => handleMultiFlip(2)} />
+            <div className="why-slot" />
+          </div>
+        </div>
       )}
 
       {viewAll && (
@@ -285,7 +216,8 @@ function App() {
               </div>
               <div className="card-details">
                 <h3>{card.name}</h3>
-                <p>{card.meaning}</p>
+                <p><strong>Upright:</strong> {card.meaning}</p>
+                <p><strong>Reversed:</strong> {card.reversedMeaning}</p>
               </div>
             </div>
           ))}
@@ -312,7 +244,7 @@ function App() {
                 <li><strong>Wands:</strong> Creativity & action</li>
                 <li><strong>Pentacles:</strong> Work & stability</li>
               </ul>
-              <li><strong>Upright = Clear energy.</strong> <strong> Reversed = Blocked or internal energy. </strong></li>
+              <li><strong>Upright = Clear energy. Reversed = Blocked or internal energy.</strong></li>
               <li>Read the card meanings and trust your intuition to connect them to your situation.</li>
             </ul>
             <button onClick={toggleGuide}>Close</button>
