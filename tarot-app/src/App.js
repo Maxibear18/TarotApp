@@ -22,6 +22,7 @@ const spreadDetails = {
 };
 
 function App() {
+  //states
   const [spreadType, setSpreadType] = useState("one");
   const [card, setCard] = useState(null);
   const [cards, setCards] = useState([]);
@@ -29,10 +30,11 @@ function App() {
   const [multiFlipped, setMultiFlipped] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showGuide, setShowGuide] = useState(false);
-  const [viewAll, setViewAll] = useState(false); // NEW
+  const [viewAll, setViewAll] = useState(false); 
 
+  //draws the cards
   const drawCard = () => {
-    setViewAll(false); // Hide view-all if drawing a spread
+    setViewAll(false); 
     setFlipped(false);
     setCard(null);
     setCards([]);
@@ -41,10 +43,12 @@ function App() {
     setTimeout(() => {
       const drawnNames = new Set();
       if (spreadType === "one") {
+        // one card draw
         const random = tarotCards[Math.floor(Math.random() * tarotCards.length)];
         const reversed = Math.random() < 0.5;
         setCard({ ...random, reversed });
       } else {
+        // multiple card draw
         const count = spreadType === "ppf" ? 3 : 5;
         const selected = [];
         while (selected.length < count) {
@@ -59,7 +63,7 @@ function App() {
       }
     }, 10);
   };
-
+  // flips the cards
   const handleFlip = () => setFlipped(true);
   const handleMultiFlip = (index) => {
     const updated = [...multiFlipped];
@@ -256,6 +260,8 @@ function App() {
     </div>
   );
 }
+
+//helpder functions
 
 function getCardGlow(name) {
   const lower = name.toLowerCase();
